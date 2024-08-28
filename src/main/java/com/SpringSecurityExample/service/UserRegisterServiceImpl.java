@@ -7,11 +7,13 @@ import com.SpringSecurityExample.model.UserRegister;
 import com.SpringSecurityExample.repository.UserRepository;
 import com.SpringSecurityExample.request.UserRegisterRequest;
 import com.SpringSecurityExample.response.APIResponse;
+import com.SpringSecurityExample.securityconfig.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.mapper.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +29,9 @@ public class UserRegisterServiceImpl implements UserRegisterService{
 
     @Autowired
     private AuthenticationManager authManager;
+
+    @Autowired
+    private JwtService jwtService;
 
     @Override
     public ResponseEntity<APIResponse> adduser(UserRegisterRequest request) {
@@ -52,7 +57,7 @@ public class UserRegisterServiceImpl implements UserRegisterService{
 
 Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUserName(),request.getCustomerPassword()));
 if (authentication.isAuthenticated())
-    return "SUCCESS";
+    return jwtService.generateToken(request.getUserName());
     return "FAIL";
     }
 }
