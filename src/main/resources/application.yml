@@ -19,6 +19,6 @@ server:
 
 ### LOGGING PROPERTIES ####
 
-logging:
-  file:
-    name: logs/app.log
+##logging:
+  ##file:
+    ##name: logs/app.log
