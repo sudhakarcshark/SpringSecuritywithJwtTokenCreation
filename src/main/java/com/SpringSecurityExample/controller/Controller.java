@@ -36,5 +36,9 @@ public class Controller {
        return service.verify(request);
     }
 
+    @GetMapping("/user/token/test")
+    public String testToken() {
+        return "Able to Access Using Token";
+    }
 }
 

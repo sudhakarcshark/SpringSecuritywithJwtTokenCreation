@@ -56,8 +56,11 @@ public class UserRegisterServiceImpl implements UserRegisterService{
     public String verify(UserRegisterRequest request) {
 
 Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUserName(),request.getCustomerPassword()));
-if (authentication.isAuthenticated())
+if (authentication.isAuthenticated()){
     return jwtService.generateToken(request.getUserName());
-    return "FAIL";
+}else {
+    return "fail";
+}
+
     }
 }
